@@ -338,6 +338,20 @@ def verify_topography_export(source: Dataset, points_path: Path, indices_path: P
             zero_area += all(value == 0 for value in cross)
     canonical_faces = {tuple(sorted(face)) for face in faces}
     same_multiset = Counter(rounded_source) == Counter(exported.points)
+    repeated_indices = sum(len(set(face)) < 3 for face in faces)
+    repeated_faces = len(faces) - len(canonical_faces)
+    missing_sites = len(set(exported.points) - represented_sites) if represented_sites is not None else None
+    # Los vértices redundantes pueden quedar sin referenciar si todos los sitios
+    # XYZ únicos están representados. Estos controles no prueban una topología
+    # íntegra, ausencia de autointersecciones ni aptitud para un uso operativo.
+    basic_triangulation_valid = (
+        base is not None and repeated_indices == 0 and repeated_faces == 0
+        and zero_area == 0 and missing_sites == 0
+    )
+    points_match = (
+        same_multiset and same_order and maximum_errors is not None
+        and all(error <= tolerance for error in maximum_errors)
+    )
     return {
         "alcance": "coincidencia de puntos a la precisión del CSV exportado; no igualdad decimal exacta ni validación integral de la superficie",
         "fuente": source.report["archivo"], "sha256_fuente": source.report["sha256"],
@@ -357,14 +371,27 @@ def verify_topography_export(source: Dataset, points_path: Path, indices_path: P
         "max_error_limites_xyz": [str(max(abs(source.minimum[index]-exported.minimum[index]),abs(source.maximum[index]-exported.maximum[index]))) for index in range(3)],
         "caras": len(faces), "indice_min": min(indices), "indice_max": max(indices),
         "base_indices_demostrada": base, "indices_validos_base_cero": valid_zero, "indices_validos_base_uno": valid_one,
-        "caras_con_indices_repetidos": sum(len(set(face))<3 for face in faces),
-        "caras_repetidas_sin_orientacion": len(faces)-len(canonical_faces),
+        "caras_con_indices_repetidos": repeated_indices,
+        "caras_repetidas_sin_orientacion": repeated_faces,
         "caras_area_cero_segun_puntos_exportados": zero_area,
         "vertices_referenciados": len(used), "vertices_no_referenciados": vertex_count-len(used),
         "sitios_xyz_representados_por_caras": len(represented_sites) if represented_sites is not None else None,
-        "sitios_xyz_sin_caras": len(set(exported.points)-represented_sites) if represented_sites is not None else None,
-        "coincidencia_a_precision_exportada": same_multiset and same_order and base is not None and all(error <= tolerance for error in maximum_errors),
+        "sitios_xyz_sin_caras": missing_sites,
+        "coincidencia_a_precision_exportada": points_match,
+        "triangulacion_pasa_controles_basicos": basic_triangulation_valid,
     }
+
+
+def validate_output_path(output: Path | None, inputs: list[Path]) -> None:
+    """Impide reemplazar cualquier entrada, incluso mediante un alias o enlace."""
+    if output is None:
+        return
+    resolved_output = output.resolve()
+    for input_path in inputs:
+        same_resolved_path = resolved_output == input_path.resolve()
+        same_existing_file = output.exists() and input_path.exists() and output.samefile(input_path)
+        if same_resolved_path or same_existing_file:
+            raise ValueError("--salida debe ser un archivo distinto de todas las entradas; no se modificó ningún archivo.")
 
 
 def main() -> int:
@@ -380,6 +407,11 @@ def main() -> int:
     if bool(arguments.terreno_exportado) != bool(arguments.indices_exportados):
         parser.error("--terreno-exportado y --indices-exportados deben proporcionarse juntos")
     try:
+        input_paths = [arguments.terreno, arguments.taladros, arguments.malla]
+        input_paths.extend(path for path in (
+            arguments.exportacion, arguments.terreno_exportado, arguments.indices_exportados
+        ) if path is not None)
+        validate_output_path(arguments.salida, input_paths)
         terrain = inspect_csv(arguments.terreno, "terreno")
         holes = inspect_csv(arguments.taladros, "taladros")
         pattern = inspect_csv(arguments.malla, "malla")
@@ -414,7 +446,8 @@ def main() -> int:
             native_valid = result["verificacion_exportacion_nativa"]["coincidencia_completa"]
         if arguments.terreno_exportado:
             result["verificacion_topografia_nativa"] = verify_topography_export(terrain, arguments.terreno_exportado, arguments.indices_exportados)
-            native_valid = native_valid and result["verificacion_topografia_nativa"]["coincidencia_a_precision_exportada"]
+            terrain_check = result["verificacion_topografia_nativa"]
+            native_valid = native_valid and terrain_check["coincidencia_a_precision_exportada"] and terrain_check["triangulacion_pasa_controles_basicos"]
         output = json.dumps(result, indent=2, ensure_ascii=False) + "\n"
         if arguments.salida:
             arguments.salida.parent.mkdir(parents=True, exist_ok=True)
@@ -422,7 +455,7 @@ def main() -> int:
         else:
             print(output, end="")
         return 2 if any(dataset.report["filas_invalidas"] for dataset in datasets) or not native_valid else 0
-    except (ValueError, csv.Error) as error:
+    except (ValueError, csv.Error, OSError) as error:
         print(f"Error de datos: {error}", file=sys.stderr)
         return 2
 

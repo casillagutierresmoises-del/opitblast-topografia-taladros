@@ -179,7 +179,6 @@
     "taladros y malla tienen cajas XY disjuntas: revisar su procedencia y sistema de referencia antes de combinarlos. No se han transformado."
   ],
   "verificacion_exportacion_nativa": {
-    "etapa": "prueba previa con Import Pattern; no acredita el recuento final de la capa Floating Holes",
     "metodo": "cotejo del CSV fuente con un CSV exportado desde la aplicación",
     "limite": "el script no identifica por sí solo la aplicación que generó el CSV ni valida parámetros de diseño",
     "fuente": "Floating Holes.csv",
@@ -200,18 +199,8 @@
     "tolerancia_longitud": "0.000001",
     "longitudes_fuera_tolerancia": 0,
     "max_error_longitud": "0.000",
-    "coincidencia_completa": true
-  },
-  "estado_final": {
-    "archivo_nativo_local": "TerrainK_Topografia_FloatingHoles.opit",
-    "sha256_archivo_nativo": "ddd78090045a7b21b300bb8b8fc2be083d0137205e792526c6a112c979c3a21a",
-    "guardado_y_reabierto": true,
-    "importador": "Boreholes > Floating Holes > Import",
-    "registros_fuente": 153,
-    "relieve_y_capa_visibles_al_reabrir": true,
-    "recuento_nativo_final_acreditado": false,
-    "comprobacion_capa_final": "visual; sin exportación numérica final de Floating Holes",
-    "capturas_publicadas": 3
+    "coincidencia_completa": true,
+    "etapa": "prueba previa con Import Pattern; no acredita el recuento final de la capa Floating Holes"
   },
   "verificacion_topografia_nativa": {
     "alcance": "coincidencia de puntos a la precisión del CSV exportado; no igualdad decimal exacta ni validación integral de la superficie",
@@ -258,6 +247,24 @@
     "vertices_no_referenciados": 289,
     "sitios_xyz_representados_por_caras": 114259,
     "sitios_xyz_sin_caras": 0,
-    "coincidencia_a_precision_exportada": true
+    "coincidencia_a_precision_exportada": true,
+    "triangulacion_pasa_controles_basicos": true
+  },
+  "estado_final": {
+    "archivo_nativo_local": "TerrainK_Topografia_FloatingHoles.opit",
+    "sha256_archivo_nativo": "ddd78090045a7b21b300bb8b8fc2be083d0137205e792526c6a112c979c3a21a",
+    "guardado_y_reabierto": true,
+    "importador": "Boreholes > Floating Holes > Import",
+    "registros_fuente": 153,
+    "relieve_y_capa_visibles_al_reabrir": true,
+    "recuento_nativo_final_acreditado": false,
+    "comprobacion_capa_final": "visual; sin exportación numérica final de Floating Holes",
+    "capturas_publicadas": 2
+  },
+  "validacion_software": {
+    "pruebas_unitarias": 11,
+    "resultado_local": "aprobadas",
+    "conversion_dxf_reproducida_sha256": "9023dd94103cc00f8d1297981cdfcea3e7f04a358b6a1ce77692a4e971b39e23",
+    "fecha": "2026-11-06"
   }
 }

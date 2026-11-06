@@ -86,4 +86,4 @@ Tras restaurar el terreno, se usó `Boreholes → Floating Holes → Import` con
 
 La comprobación de esta capa final es visual. No se atribuye a ella el cotejo de 153/153 de la prueba previa de Import Pattern. El recuento y la exportación nativa final de la capa Floating Holes no quedaron acreditados en esta etapa.
 
-El proyecto `TerrainK_Topografia_FloatingHoles.opit` se guardó y volvió a abrir con el relieve y la distribución visibles. Las tres capturas del repositorio proceden de esa sesión. El archivo nativo y los CSV de trabajo se conservan localmente.
+El proyecto `TerrainK_Topografia_FloatingHoles.opit` se guardó y volvió a abrir con el relieve y la distribución visibles. Dos capturas seleccionadas muestran el resultado. El archivo nativo y los CSV de trabajo se conservan localmente.

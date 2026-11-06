@@ -1,66 +1,73 @@
-# O-PitBlast | Topografía y taladros
+# Terrain K · Topografía y control geométrico en O-PitBlast
 
-Primer flujo de trabajo con **O-PitBlast 1.5.93.0**: revisar datos de entrada, incorporar una topografía e importar coordenadas de taladros conservando la geometría de origen.
+**Caso de estudio académico y técnico · O-PitBlast 1.5.93.0 · Python · Calidad de datos**
 
-Este proyecto documenta una práctica inicial de manejo del software. El alcance es la importación y comprobación geométrica; no incluye diseño de cargas, tiempos de iniciación ni validación de un plan operativo de voladura.
+Integración de una nube topográfica y coordenadas de taladros, con trazabilidad desde los archivos de origen hasta las evidencias del programa. El proyecto combina manejo de software minero con comprobaciones reproducibles de geometría.
 
-## Alcance de esta primera etapa
+## Problema y resultado
 
-- Identificar la versión correcta del programa y conectarla al control local de Windows.
-- Revisar estructura, separadores, coordenadas, filas y campos de los archivos.
-- Distinguir los datos compatibles de ejemplos que pertenecen a otra ubicación.
-- Mapear coordenadas de boca y fondo sin intercambiar ejes ni ajustar cotas automáticamente.
-- Conservar una copia del proyecto antes de modificar la sesión.
-- Documentar el resultado con capturas de la interfaz.
+El taller reúne archivos que parecen relacionados, pero **no todos corresponden a la misma ubicación**. Además, una importación de taladros puede sustituir el relieve por una superficie de collares. El trabajo consiste en conservar coordenadas y procedencia, incorporar el conjunto compatible y comprobar el resultado.
 
-## Datos de la práctica
+Se recuperó el relieve de Terrain K, se incorporó la capa `Floating Holes` sobre ese terreno y se guardó y volvió a abrir el proyecto nativo. La verificación del terreno contrasta sus puntos y conectividad. La capa final de taladros tiene comprobación visual; su recuento nativo final permanece pendiente.
 
-| Conjunto | Contenido comprobado | Tratamiento |
-| --- | --- | --- |
-| Terrain K - Cloud 2 | Nube DXF con 114 548 puntos en la capa `CLOUD_001`; 114 259 posiciones XYZ únicas. | Topografía del conjunto principal. |
-| Floating Holes | 153 registros con coordenadas XYZ de boca y fondo. | Coincide espacialmente con Terrain K. |
-| Malla Ejemplo | 195 registros con ID y coordenadas de boca. | Conjunto distinto; mantener separado. No trae longitud ni coordenadas de fondo. |
+| Resultado medido | Valor |
+| --- | ---: |
+| Puntos topográficos conservados | 114 548 |
+| Posiciones XYZ únicas / repeticiones | 114 259 / 289 |
+| Triángulos exportados y revisados | 228 438 |
+| Error máximo del cotejo de coordenadas | 0.0000037841796875 |
+| Tolerancia según exportación de tres decimales | 0.0005 |
+| Registros de origen de Floating Holes | 153 |
+| Puntos de Malla Ejemplo mantenidos aparte | 195 |
 
-Los originales no se distribuyen en este repositorio. El DXF no declara unidades ni sistema de referencia; se conserva su escala numérica y no se aplica una transformación de coordenadas.
+Las cifras son controles de los archivos y exportaciones; no representan precisión de un levantamiento en campo. Las unidades y el sistema de referencia no están declarados en las fuentes.
 
-## Evidencias y estado
+## Dos vistas del resultado
 
-La exportación nativa del terreno conserva **114 548 puntos** —114 259 posiciones únicas y 289 repeticiones— y **228 438 triángulos válidos**. Las coordenadas coinciden con el origen a tres decimales; el error máximo es **3.7841796875e-6**, inferior a la tolerancia de **0.0005**. Esto acredita la recuperación del relieve sin afirmar igualdad decimal exacta del terreno.
+**Vista general del relieve y la distribución de taladros flotantes**
 
-Los datos de `Floating Holes.csv`, con **153 registros de origen**, se incorporaron mediante `Boreholes → Floating Holes → Import`. La distribución final se observa sobre el banco y conserva el relieve. Esta capa se ha comprobado visualmente; aún no se dispone de un recuento o una exportación nativa final de esa capa.
+![Vista general de Terrain K en O-PitBlast](media/capturas/vista-general.png)
 
-Una prueba anterior con `Import Pattern` sí produjo una exportación de 153/153 registros con las seis coordenadas idénticas y longitudes geométricas de 13.774–14.305. Ese cotejo se documenta como una prueba previa, sin atribuirlo al estado final de Floating Holes.
+**Detalle del banco y los segmentos de Floating Holes**
 
-El proyecto nativo `TerrainK_Topografia_FloatingHoles.opit` quedó guardado y se volvió a abrir en O-PitBlast con el relieve y la capa de taladros flotantes visibles. El archivo nativo se conserva localmente.
+![Detalle del terreno y Floating Holes](media/capturas/detalle-3d.png)
 
-Las siguientes capturas muestran la sesión real del programa:
+Capturas reales de O-PitBlast. Los segmentos oscuros corresponden a una capa de referencia geométrica; no acreditan un diseño nuevo de perforación.
 
-**Vista general del relieve y los taladros flotantes**
+## Desarrollo técnico
 
-![Topografía y taladros en O-PitBlast](media/capturas/01-topografia-taladros.png)
+1. Identificación de la versión y respaldo del proyecto nativo.
+2. Inspección de campos, separadores, coordenadas, duplicados y hashes.
+3. Extracción DXF → CSV XYZ conservando cadenas decimales, orden y repeticiones.
+4. Importación del relieve y cotejo de su exportación nativa.
+5. Importación específica de `Floating Holes`, con seis coordenadas de boca y fondo.
+6. Guardado, reapertura y documentación de las comprobaciones y sus límites.
 
-**Vista en planta**. Las coordenadas de los taladros se muestran como puntos sobre la superficie.
+Se detectaron y separaron los 195 registros de `Malla Ejemplo`, cuyas coordenadas pertenecen a otro conjunto. No se desplazaron para hacerlos coincidir.
 
-![Vista en planta del terreno](media/capturas/02-vista-planta.png)
+## Explorar el proyecto
 
-**Detalle del banco y la distribución de taladros**
+| Documento | Contenido |
+| --- | --- |
+| [Memoria técnica](docs/memoria-tecnica.md) | Problema, decisiones, resultados, criterios de aceptación y límites. |
+| [Flujo en O-PitBlast](docs/flujo-inicial.md) | Pasos de la sesión, mapeo e importadores. |
+| [Comprobación de datos](docs/verificacion-datos.md) | Evidencia numérica y distinción entre etapas. |
+| [Reproducir las verificaciones](docs/uso-reproducible.md) | Comandos, requisitos, códigos de salida y pruebas. |
+| [Resultados estructurados](docs/resultados-fuentes.json) | Recuentos, hashes, tolerancias y estado del proyecto. |
+| [Descripción para CV y entrevista](docs/cv-y-entrevista.md) | Presentación breve del trabajo y competencias demostradas. |
 
-![Detalle del terreno y taladros flotantes](media/capturas/03-detalle-terreno-taladros.png)
+## Ejecutar las pruebas
 
-## Documentación
+Requiere **Python 3.10 o posterior** y su biblioteca estándar. No instala dependencias.
 
-- [Flujo inicial en el programa](docs/flujo-inicial.md)
-- [Comprobación y mapeo de datos](docs/verificacion-datos.md)
-- [Resultados numéricos de las comprobaciones](docs/resultados-fuentes.json)
-- [Verificador reproducible de geometría](scripts/verificar_geometria.py)
+```sh
+python -m unittest discover -s tests -v
+```
 
-## Herramientas utilizadas
+Las pruebas usan archivos sintéticos temporales. Los originales del taller y el proyecto `.opit` se conservan localmente; el repositorio publica documentación, código y dos capturas.
 
-- O-PitBlast **1.5.93.0**, en Windows.
-- Codex y la skill local específica del programa.
-- [Windows-MCP](https://github.com/CursorTouch/Windows-MCP), como puente general de interfaz de Windows. No es una API interna de O-PitBlast.
-- Python y ezdxf para inspección de archivos y preparación de una copia XYZ cuando el importador lo requiera.
+## Alcance
 
-## Próximas etapas
+Este caso cubre topografía, importación y calidad geométrica. Quedan documentadas la ausencia de CRS y unidades certificadas, la falta de propiedades de los taladros y la comprobación exclusivamente visual de la capa final Floating Holes. No constituye un plan operativo de voladura.
 
-Revisar propiedades de los taladros con datos de origen suficientes, obtener un recuento y una exportación verificable de la capa Floating Holes y ampliar el registro de comprobaciones. Cada etapa se incorporará con evidencia propia.
+**Herramientas:** O-PitBlast 1.5.93.0, Python, inspección auxiliar con ezdxf y asistencia de Codex mediante la skill local y [Windows-MCP](https://github.com/CursorTouch/Windows-MCP). El control de interfaz es general de Windows; no es una API interna del fabricante. Proyecto personal sin afiliación al fabricante ni a una empresa minera.
