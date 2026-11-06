@@ -1,0 +1,24 @@
+# Instaladores, componentes del programa y credenciales
+*.exe
+*.dll
+*.msi
+*.pfx
+*.pem
+*.key
+*.log
+.env
+.env.*
+
+# Proyectos y datos de origen no autorizados para distribuir
+*.opit
+*.dxf
+*.csv
+*.xlsx
+*.pdf
+
+# Archivos temporales
+__pycache__/
+*.pyc
+Thumbs.db
+desktop.ini
+.DS_Store

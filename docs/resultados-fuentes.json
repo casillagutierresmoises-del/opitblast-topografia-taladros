@@ -1,0 +1,263 @@
+{
+  "version_esquema": 1,
+  "alcance": "inspección de fuentes y cotejo de exportaciones nativas; las etapas se distinguen del estado final de Floating Holes",
+  "convenciones": {
+    "separador": ",",
+    "decimal": ".",
+    "codificacion": "UTF-8",
+    "limites_y_distancias": "cadenas decimales para conservar precisión",
+    "crs_y_unidades": "no se deducen de las magnitudes de las coordenadas",
+    "duplicados": "igualdad numérica de XYZ o de los seis componentes collar/toe",
+    "solape": "sólo cajas envolventes XY; no acredita coincidencia de terrenos"
+  },
+  "fuentes": [
+    {
+      "rol": "terreno",
+      "archivo": "Terrain K - Cloud 2_XYZ.csv",
+      "sha256": "9023dd94103cc00f8d1297981cdfcea3e7f04a358b6a1ce77692a4e971b39e23",
+      "bytes": 7778868,
+      "filas": 114548,
+      "filas_geometricas_validas": 114548,
+      "filas_invalidas": 0,
+      "columnas": [
+        "X",
+        "Y",
+        "Z"
+      ],
+      "mapeo": {
+        "X": "X",
+        "Y": "Y",
+        "Z": "Z"
+      },
+      "coordenadas_vacias": 0,
+      "coordenadas_no_numericas": 0,
+      "coordenadas_no_finitas": 0,
+      "xyz_unicos": 114259,
+      "xyz_repetidos": 289,
+      "geometrias_completas_repetidas": 289,
+      "limites_xyz": {
+        "min": {
+          "X": "530180.832000732421875",
+          "Y": "7821922.6989974975585938",
+          "Z": "83.7659988403320313"
+        },
+        "max": {
+          "X": "530322.1009979248046875",
+          "Y": "7822063.9669990539550781",
+          "Z": "98.2969970703125"
+        }
+      }
+    },
+    {
+      "rol": "taladros",
+      "archivo": "Floating Holes.csv",
+      "sha256": "eb50d00cbab32246864cd0e0a87709de20242883b4c78b7b84c753da1086e2a1",
+      "bytes": 8656,
+      "filas": 153,
+      "filas_geometricas_validas": 153,
+      "filas_invalidas": 0,
+      "columnas": [
+        "X",
+        "Y",
+        "Z",
+        "X_Toe",
+        "Y_Toe",
+        "Z_Toe"
+      ],
+      "mapeo": {
+        "X": "X",
+        "Y": "Y",
+        "Z": "Z",
+        "X_TOE": "X_Toe",
+        "Y_TOE": "Y_Toe",
+        "Z_TOE": "Z_Toe"
+      },
+      "coordenadas_vacias": 0,
+      "coordenadas_no_numericas": 0,
+      "coordenadas_no_finitas": 0,
+      "xyz_unicos": 153,
+      "xyz_repetidos": 0,
+      "geometrias_completas_repetidas": 0,
+      "limites_xyz": {
+        "min": {
+          "X": "530228.707",
+          "Y": "7821957.516",
+          "Z": "98"
+        },
+        "max": {
+          "X": "530259.597",
+          "Y": "7822030.832",
+          "Z": "98"
+        }
+      },
+      "limites_toe_xyz": {
+        "min": {
+          "X": "530228.707",
+          "Y": "7821957.516",
+          "Z": "83.695"
+        },
+        "max": {
+          "X": "530259.597",
+          "Y": "7822030.832",
+          "Z": "84.226"
+        }
+      },
+      "distancia_collar_toe": {
+        "cantidad": 153,
+        "min": "13.774",
+        "max": "14.305",
+        "distancias_cero": 0,
+        "unidad": "misma unidad numérica de las coordenadas; no se aplica conversión"
+      }
+    },
+    {
+      "rol": "malla",
+      "archivo": "Malla Ejemplo.csv",
+      "sha256": "5ffd14de67f2c703cc3a3805f74466e0fd2ed5d3c87b58fee98e50e2d86fae2b",
+      "bytes": 7334,
+      "filas": 195,
+      "filas_geometricas_validas": 195,
+      "filas_invalidas": 0,
+      "columnas": [
+        "ID",
+        "ESTE",
+        "NORTE",
+        "ELEV"
+      ],
+      "mapeo": {
+        "X": "ESTE",
+        "Y": "NORTE",
+        "Z": "ELEV"
+      },
+      "coordenadas_vacias": 0,
+      "coordenadas_no_numericas": 0,
+      "coordenadas_no_finitas": 0,
+      "xyz_unicos": 195,
+      "xyz_repetidos": 0,
+      "geometrias_completas_repetidas": 0,
+      "limites_xyz": {
+        "min": {
+          "X": "326530.665",
+          "Y": "8109253.08",
+          "Z": "3645"
+        },
+        "max": {
+          "X": "326635.461",
+          "Y": "8109358.622",
+          "Z": "3645"
+        }
+      },
+      "identificadores": {
+        "unicos": 195,
+        "repetidos": 0,
+        "vacios": 0
+      }
+    }
+  ],
+  "comparaciones": [
+    {
+      "a": "terreno",
+      "b": "taladros",
+      "solape_cajas_xy": true,
+      "puntos_b_en_caja_xy_a": 153
+    },
+    {
+      "a": "terreno",
+      "b": "malla",
+      "solape_cajas_xy": false,
+      "puntos_b_en_caja_xy_a": 0
+    },
+    {
+      "a": "taladros",
+      "b": "malla",
+      "solape_cajas_xy": false,
+      "puntos_b_en_caja_xy_a": 0
+    }
+  ],
+  "advertencias": [
+    "terreno y malla tienen cajas XY disjuntas: revisar su procedencia y sistema de referencia antes de combinarlos. No se han transformado.",
+    "taladros y malla tienen cajas XY disjuntas: revisar su procedencia y sistema de referencia antes de combinarlos. No se han transformado."
+  ],
+  "verificacion_exportacion_nativa": {
+    "etapa": "prueba previa con Import Pattern; no acredita el recuento final de la capa Floating Holes",
+    "metodo": "cotejo del CSV fuente con un CSV exportado desde la aplicación",
+    "limite": "el script no identifica por sí solo la aplicación que generó el CSV ni valida parámetros de diseño",
+    "fuente": "Floating Holes.csv",
+    "sha256_fuente": "eb50d00cbab32246864cd0e0a87709de20242883b4c78b7b84c753da1086e2a1",
+    "exportacion": "taladros_exportados.csv",
+    "sha256_exportacion": "4a375c4ae9985a42a760f82bc740ccd74d7335579edfc996efc75dd92531a35b",
+    "filas_fuente": 153,
+    "filas_exportadas": 153,
+    "seis_coordenadas_iguales_por_orden": true,
+    "geometrias_iguales_sin_orden": true,
+    "collares_xy_iguales_sin_orden": true,
+    "geometrias_exportadas_repetidas": 0,
+    "collares_xy_exportados_repetidos": 0,
+    "filas_faltantes": 0,
+    "filas_adicionales": 0,
+    "distancia_min": "13.774",
+    "distancia_max": "14.305",
+    "tolerancia_longitud": "0.000001",
+    "longitudes_fuera_tolerancia": 0,
+    "max_error_longitud": "0.000",
+    "coincidencia_completa": true
+  },
+  "estado_final": {
+    "archivo_nativo_local": "TerrainK_Topografia_FloatingHoles.opit",
+    "sha256_archivo_nativo": "ddd78090045a7b21b300bb8b8fc2be083d0137205e792526c6a112c979c3a21a",
+    "guardado_y_reabierto": true,
+    "importador": "Boreholes > Floating Holes > Import",
+    "registros_fuente": 153,
+    "relieve_y_capa_visibles_al_reabrir": true,
+    "recuento_nativo_final_acreditado": false,
+    "comprobacion_capa_final": "visual; sin exportación numérica final de Floating Holes",
+    "capturas_publicadas": 3
+  },
+  "verificacion_topografia_nativa": {
+    "alcance": "coincidencia de puntos a la precisión del CSV exportado; no igualdad decimal exacta ni validación integral de la superficie",
+    "fuente": "Terrain K - Cloud 2_XYZ.csv",
+    "sha256_fuente": "9023dd94103cc00f8d1297981cdfcea3e7f04a358b6a1ce77692a4e971b39e23",
+    "exportacion_puntos": "terreno_exportado.csv",
+    "sha256_exportacion_puntos": "10cb54849b1c8000a3b4f54e886d7c42078c0717a0e38a65d9176b1ec1acab2c",
+    "exportacion_indices": "terreno_exportado_index.csv",
+    "sha256_exportacion_indices": "6a1f6b936700bb54f8d2540d9e38eb180261bf0b4f9c0b4811c5138637de9263",
+    "puntos_fuente": 114548,
+    "xyz_unicos_fuente": 114259,
+    "puntos_repetidos_fuente": 289,
+    "puntos_exportados": 114548,
+    "xyz_unicos_exportados": 114259,
+    "puntos_repetidos_exportados": 289,
+    "decimales_exportados": 3,
+    "paso_redondeo": "0.001",
+    "tolerancia_por_coordenada": "0.0005",
+    "mismo_multiconjunto_redondeado": true,
+    "mismo_conjunto_redondeado": true,
+    "mismo_orden_redondeado": true,
+    "puntos_faltantes_con_multiplicidad": 0,
+    "puntos_adicionales_con_multiplicidad": 0,
+    "max_error_orden_xyz": [
+      "0.0000037841796875",
+      "0.0000037841796875",
+      "0.0000037841796875"
+    ],
+    "max_error_limites_xyz": [
+      "0.0000020751953125",
+      "0.0000025024414062",
+      "0.0000029296875"
+    ],
+    "caras": 228438,
+    "indice_min": 0,
+    "indice_max": 114547,
+    "base_indices_demostrada": 0,
+    "indices_validos_base_cero": true,
+    "indices_validos_base_uno": false,
+    "caras_con_indices_repetidos": 0,
+    "caras_repetidas_sin_orientacion": 0,
+    "caras_area_cero_segun_puntos_exportados": 0,
+    "vertices_referenciados": 114259,
+    "vertices_no_referenciados": 289,
+    "sitios_xyz_representados_por_caras": 114259,
+    "sitios_xyz_sin_caras": 0,
+    "coincidencia_a_precision_exportada": true
+  }
+}
