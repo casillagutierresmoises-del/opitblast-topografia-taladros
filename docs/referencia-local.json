@@ -1,0 +1,168 @@
+{
+  "version_esquema": 1,
+  "fecha": "2026-11-06",
+  "alcance": "auditoria de geometria de referencia; no valida un diseno operativo",
+  "metodo_lectura": "System.Formats.Nrbf.NrbfDecoder oficial .NET 10: lectura de registros, sin instanciar objetos de O-PitBlast, sin BinaryFormatter.Deserialize y sin DLL del programa",
+  "documentacion_lectura": "https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-migration-guide/read-nrbf-payloads",
+  "lectura_no_es_exportacion_ni_api_del_fabricante": true,
+  "componentes_geometricos": "System.Single / IEEE 754 binary32",
+  "unidad_errores": "unidades numericas de las fuentes; sin certificacion de unidades o CRS",
+  "origen_xyz_exacto": {
+    "X": "530180.832000732421875",
+    "Y": "7821922.6989974975585938",
+    "Z": "83.7659988403320313"
+  },
+  "transformacion": "local = global - origen; global = local + origen",
+  "original": {
+    "archivo": "TerrainK_Topografia_FloatingHoles.opit",
+    "sha256": "ddd78090045a7b21b300bb8b8fc2be083d0137205e792526c6a112c979c3a21a",
+    "archivo_sin_modificar_durante_auditoria": true,
+    "puntos_terreno_almacenados": 114548,
+    "referencias_floating_almacenadas": 153,
+    "geometrias_floating_unicas": 153,
+    "errores_maximos_reconstruccion_seis_coordenadas": [
+      "0.050500732421875",
+      "0.4419974975585938",
+      "3E-16",
+      "0.050500732421875",
+      "0.4419974975585938",
+      "0.00000378417968745"
+    ],
+    "orden_seis_coordenadas": [
+      "X",
+      "Y",
+      "Z",
+      "X_Toe",
+      "Y_Toe",
+      "Z_Toe"
+    ],
+    "puntos_distintos_del_modelo_single_local": 153,
+    "puntos_distintos_del_modelo_single_absoluto": 0,
+    "errores_maximos_reconstruccion_terreno_single_xyz": [
+      "0.0000076293945375",
+      "0.0000114440918018",
+      "0.0000050067901612"
+    ]
+  },
+  "local": {
+    "archivo": "TerrainK_Geometria_Local.opit",
+    "sha256": "e4af2f524faa0b41a7e2bc8f5ee5409de4ae1c63b21e8d90471fa428363fbff6",
+    "archivo_sin_modificar_durante_auditoria": true,
+    "puntos_terreno_almacenados": 114548,
+    "referencias_floating_almacenadas": 153,
+    "geometrias_floating_unicas": 153,
+    "errores_maximos_reconstruccion_seis_coordenadas": [
+      "0.000003723144535",
+      "0.0000037841796938",
+      "3E-16",
+      "0.000003723144535",
+      "0.0000037841796938",
+      "1.45435333E-8"
+    ],
+    "orden_seis_coordenadas": [
+      "X",
+      "Y",
+      "Z",
+      "X_Toe",
+      "Y_Toe",
+      "Z_Toe"
+    ],
+    "puntos_distintos_del_modelo_single_local": 0,
+    "puntos_distintos_del_modelo_single_absoluto": 153,
+    "errores_maximos_reconstruccion_terreno_single_xyz": [
+      "0.0000076293945375",
+      "0.0000114440918018",
+      "0.0000050067901612"
+    ]
+  },
+  "interpretacion": "El orden de conversion a Single es una hipotesis numerica consistente con todos los registros comparados; no se audito codigo del fabricante. En el original, la reconstruccion usa el minimo del terreno inferido y contrastado con su nube; en la copia local, ese origen esta documentado explicitamente.",
+  "preparacion_decimal": {
+    "precision": 60,
+    "fuentes": [
+      {
+        "archivo": "Terrain K - Cloud 2_XYZ.csv",
+        "sha256": "9023dd94103cc00f8d1297981cdfcea3e7f04a358b6a1ce77692a4e971b39e23",
+        "filas": 114548
+      },
+      {
+        "archivo": "Floating Holes.csv",
+        "sha256": "eb50d00cbab32246864cd0e0a87709de20242883b4c78b7b84c753da1086e2a1",
+        "filas": 153
+      }
+    ],
+    "salidas": [
+      {
+        "archivo": "TerrainK_local_XYZ.csv",
+        "sha256": "9a23974e638cce4dc9705795ad7be602d390dc8df1ab461bca2d56ee45917b0b",
+        "filas": 114548
+      },
+      {
+        "archivo": "FloatingHoles_local.csv",
+        "sha256": "3adfc96f2eec4b818b5d52aba8b3b5d004a4b5c09fefe8dd1d34960363eb2a78",
+        "filas": 153
+      }
+    ],
+    "validacion": {
+      "inversa_decimal_exacta_todas_las_filas_y_coordenadas": true,
+      "orden_y_multiplicidades_conservados": true,
+      "encabezados_y_numero_de_campos_conservados": true,
+      "roundtrip_csv_decimal_exacto": true,
+      "diferencias_vectoriales_consecutivas_exactas_todas_las_filas": true,
+      "vectores_y_distancias_cuadradas_collar_toe_exactos_todos_los_registros": true,
+      "distancias_preservadas_por_traslacion_comun_algebra": true,
+      "metodo_distancias": "(a-o)-(b-o)=a-b; se validaron además todas las diferencias consecutivas y collar-toe; no se redondearon raíces"
+    },
+    "originales_sin_modificar": true
+  },
+  "exportacion_terreno_local": {
+    "alcance": "coincidencia de puntos a la precisión del CSV exportado; no igualdad decimal exacta ni validación integral de la superficie",
+    "fuente": "TerrainK_local_XYZ.csv",
+    "sha256_fuente": "9a23974e638cce4dc9705795ad7be602d390dc8df1ab461bca2d56ee45917b0b",
+    "exportacion_puntos": "terreno_local_exportado.csv",
+    "sha256_exportacion_puntos": "6db81691036a536f75b9833f97d15a87da249f312010c4deea176e135305f6a5",
+    "exportacion_indices": "terreno_local_exportado_index.csv",
+    "sha256_exportacion_indices": "6ffbe6ed6b2dda39aa364312b2efc1d9ee861eb0825bc6f9782d0e2654ac4655",
+    "puntos_fuente": 114548,
+    "xyz_unicos_fuente": 114259,
+    "puntos_repetidos_fuente": 289,
+    "puntos_exportados": 114548,
+    "xyz_unicos_exportados": 114259,
+    "puntos_repetidos_exportados": 289,
+    "decimales_exportados": 3,
+    "paso_redondeo": "0.001",
+    "tolerancia_por_coordenada": "0.0005",
+    "mismo_multiconjunto_redondeado": true,
+    "mismo_conjunto_redondeado": true,
+    "mismo_orden_redondeado": true,
+    "puntos_faltantes_con_multiplicidad": 0,
+    "puntos_adicionales_con_multiplicidad": 0,
+    "max_error_orden_xyz": [
+      "0.0000045166015625",
+      "0.0000062866210937",
+      "0.0000049438476562"
+    ],
+    "max_error_limites_xyz": [
+      "0.0000028076171875",
+      "0.0000015563964843",
+      "0.0000017700195313"
+    ],
+    "caras": 228439,
+    "indice_min": 0,
+    "indice_max": 114547,
+    "base_indices_demostrada": 0,
+    "indices_validos_base_cero": true,
+    "indices_validos_base_uno": false,
+    "caras_con_indices_repetidos": 0,
+    "caras_repetidas_sin_orientacion": 0,
+    "caras_area_cero_segun_puntos_exportados": 0,
+    "vertices_referenciados": 114259,
+    "vertices_no_referenciados": 289,
+    "sitios_xyz_representados_por_caras": 114259,
+    "sitios_xyz_sin_caras": 0,
+    "coincidencia_a_precision_exportada": true,
+    "triangulacion_pasa_controles_basicos": true
+  },
+  "reapertura_en_opitblast": true,
+  "puntos_marcados_outliers_conservados": 2857,
+  "capturas_publicadas": 2
+}

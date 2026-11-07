@@ -52,6 +52,14 @@ Ese CSV requiere las seis coordenadas y `Length`. El script verifica el archivo 
 
 ## 4. Leer el resultado
 
+Para cotejar la copia local final, utilizar los dos CSV locales preparados con el mismo origen documentado en [Precisión y referencia local](precision-coordenadas.md). No combinar una fuente global con una exportación local:
+
+```sh
+python scripts/verificar_geometria.py "trabajo/TerrainK_local_XYZ.csv" "trabajo/FloatingHoles_local.csv" "datos/Malla Ejemplo.csv" --terreno-exportado "trabajo/terreno_local_exportado.csv" --indices-exportados "trabajo/terreno_local_exportado_index.csv" --salida "trabajo/cotejo-local.json"
+```
+
+El [informe de la referencia local](referencia-local.json) separa este cotejo CSV de la lectura estructural NRBF de las referencias guardadas. El lector estructural fue una herramienta local de auditoría, independiente de los dos scripts de biblioteca estándar publicados.
+
 | Código | Significado |
 | --- | --- |
 | 0 | El comando terminó y pasaron los controles solicitados. |

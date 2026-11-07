@@ -6,7 +6,7 @@
 
 ## Descripción breve
 
-Caso de estudio con O-PitBlast 1.5.93.0: integración de una nube de 114 548 puntos y coordenadas de 153 registros de taladros. Desarrollo de utilidades Python para trazabilidad, detección de duplicados y verificación de 228 438 triángulos, con pruebas automatizadas y documentación pública.
+Caso de estudio con O-PitBlast 1.5.93.0: integración de una nube de 114 548 puntos y 153 referencias geométricas de taladros. Desarrollo de utilidades Python para trazabilidad, detección de duplicados y verificación de más de 228 mil caras, con pruebas automatizadas y documentación pública.
 
 ## Dos puntos para una sección de proyectos
 
@@ -17,7 +17,7 @@ Caso de estudio con O-PitBlast 1.5.93.0: integración de una nube de 114 548 pun
 
 ## Explicación de 45 segundos
 
-> En este proyecto trabajé la integración de datos en O-PitBlast y su control geométrico. Había una nube topográfica, coordenadas de taladros y una malla de otra ubicación. Separé las procedencias y contrasté exportaciones con fuentes. El terreno conservó 114 548 puntos y se revisaron 228 438 triángulos. También documenté un problema de importación que sustituía el relieve por una superficie de collares, y el estado final con Floating Holes sobre el terreno. Lo presento como una práctica de calidad de datos y manejo inicial del programa, con sus comprobaciones y límites visibles.
+> En este proyecto trabajé la integración de datos en O-PitBlast y su control geométrico. Había una nube topográfica, coordenadas de taladros y una malla de otra ubicación. Separé las procedencias y contrasté exportaciones con fuentes. El modelo local final conservó 114 548 puntos y se revisaron 228 439 caras. También documenté un problema de importación del relieve y otro de precisión numérica, preparando una referencia local reversible. La lectura del archivo guardado confirmó 153 referencias geométricas. Lo presento como una práctica de calidad de datos y manejo inicial del programa, con sus comprobaciones y límites visibles.
 
 ## Competencias demostradas
 

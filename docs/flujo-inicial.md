@@ -41,3 +41,9 @@ La presencia de un archivo guardado o de un botón accesible no sustituye la com
 ## 6. Registrar evidencias
 
 Capturar una vista de la topografía, una vista de la distribución de taladros y, si está disponible, el cuadro con el recuento. Mostrar el resultado real de la sesión. No incluir otras aplicaciones, conversaciones, cuentas ni rutas personales innecesarias.
+
+## 7. Referencia local y precisión de la capa guardada
+
+La revisión posterior del archivo detectó pérdida de precisión en las referencias importadas con coordenadas grandes. Se preparó una copia explícitamente local con el mismo origen para terreno, boca y fondo; se conservaron las fuentes globales. El proyecto final se guarda como `TerrainK_Geometria_Local.opit` y debe acompañarse de `TerrainK_Geometria_Local.origen.json`.
+
+La [auditoría de precisión](precision-coordenadas.md) documenta el origen, la transformación inversa, el recuento de 153 referencias y el cotejo de la nueva exportación de 228 439 caras. Es una capa de referencia geométrica; no se convirtió en un patrón de diseño nuevo.
